@@ -5,24 +5,29 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors");
 var session = require("express-session");
-
 var userApiRouter = require('./routes/user');
+var resultApiRouter = require('./routes/result');
+
 var app = express();
 
-app.use(session({
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+// configure for cors
+app.set(session({
   secret: "keyboard cat",
   resave: false,
   saveUninitialized: true,
   cookie: {}// for testing
-}))
-app.use("/api/user",cors(),userApiRouter);
-
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.set("view engine","jade");
+app.use('/api/user',cors(), userApiRouter);
+app.use('/api/result',cors(),resultApiRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

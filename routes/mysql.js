@@ -9,14 +9,15 @@ if ("production" == process.env.NODE_ENV) {
     };
 } else {
     connectionJson = {
+        connectionLimit:10,
         host: "localhost",
         user: "root",
         password: "Iamamysqleer231",
         database: "effectivest"
     };
 }
-var connection = mysql.createConnection(connectionJson);
-connection.connect(function(err) {
+var connection = mysql.createPool(connectionJson);
+connection.getConnection(function(err) {
     if (err) {
         console.error('error connecting: ' + err.stack);
         return;
