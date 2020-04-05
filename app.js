@@ -10,6 +10,7 @@ var resultApiRouter = require('./routes/result');
 var mistakeApiRouter = require('./routes/mistake');
 var csvApiRouter = require("./routes/csv");
 var testApiRouter = require("./routes/test");
+var questionApiRouter = require("./routes/question");
 var app = express();
 
 // view engine setup
@@ -33,6 +34,8 @@ app.use('/api/result',cors(),resultApiRouter);
 app.use('/api/mistake',cors(),mistakeApiRouter);
 app.use('/api/csv',cors(),csvApiRouter);
 app.use('/api/test',cors(),testApiRouter);
+app.use('/api/question',cors(),questionApiRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

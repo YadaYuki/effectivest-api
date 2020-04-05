@@ -1,6 +1,4 @@
-var jwt = require("jsonwebtoken")
 var apiUrl = app + "/api/test";
-
 describe("api/test",function(){
     var userToken;
     it("login for test afterward", function (done) {

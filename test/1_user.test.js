@@ -1,4 +1,3 @@
-var jwt = require("jsonwebtoken")
 var apiUrl = app + "/api/user";
 describe("/api/user/", function() {
     it("sample page getting", function(done) {
