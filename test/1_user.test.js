@@ -23,8 +23,8 @@ describe("/api/user/", function() {
     });
     it("login failed",function(done){
         const userInfo = {email:"mistake@com",password:"email"};
-        request(app)
-            .post("/api/user/login")
+        request(apiUrl)
+            .post("/login")
             .send(userInfo)
             .expect((res)=>{
                 expect(res.body.is_success).toEqual(false);
@@ -36,8 +36,8 @@ describe("/api/user/", function() {
     }
     var sampleUserToken;
     it("regist success",function(done){
-        request(app)
-            .post("/api/user/regist")
+        request(apiUrl)
+            .post("/regist")
             .send(sampleUser)
             .expect((res)=>{
                 expect(res.body.is_success).toEqual(true);
@@ -46,8 +46,8 @@ describe("/api/user/", function() {
             .end(done);
     });
     it("regist failed",function(done){
-        request(app)
-            .post("/api/user/regist")
+        request(apiUrl)
+            .post("/regist")
             .send(sampleUser)
             .expect((res)=>{
                 expect(res.body.is_success).toEqual(false);
@@ -56,8 +56,8 @@ describe("/api/user/", function() {
     });
 
     it("get success",function(done){
-        request(app)
-            .get("/api/user/get?user_token="+sampleUserToken)
+        request(apiUrl)
+            .get("/get?user_token="+sampleUserToken)
             .expect((res)=>{
                 expect(res.body).toEqual({email:sampleUser.email,username:sampleUser.username});
             })
@@ -120,7 +120,7 @@ describe("/api/user/", function() {
             .expect((res)=>{
                 expect(res.body.is_success).toEqual(false);
             })
-            .end(done)
+            .end(done);
     });
 
     //regist failed

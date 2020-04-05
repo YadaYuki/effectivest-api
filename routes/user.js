@@ -58,7 +58,7 @@ router.post("/regist", function (req, res, next) {
                 password: hash,
             };
             connection.query(insertUserQuery, userJson, function (err, result, fields) {
-                if (err) { loggerjs.error(err); throw err; }
+                if (err) { loggerjs.error(err); res.json({ is_success: false });throw err; }
                 loggerjs.info(result.insertId + ":registerd");
                 const userIdJson = { user_id: result.insertId };
                 res.json({ is_success: true, user_token: jwt.sign(userIdJson, privateKey) });

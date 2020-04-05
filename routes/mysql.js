@@ -2,6 +2,7 @@ var mysql = require("mysql");
 var connectionJson;
 if ("production" == process.env.NODE_ENV) {
     connectionJson = {
+        connectionLimit:10,
         host: "35.236.131.114",
         user: "root",
         password: "pyGiCgyvIxgpn2h4",

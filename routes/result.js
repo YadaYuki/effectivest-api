@@ -24,13 +24,13 @@ router.post("/add",function(req,res,next){
         };
         connection.query(insertResultQuery,resultJson,function(err,result,field){
             if(err){loggerjs.error(err);res.json({is_resulted:false});throw err}
-            res.json({is_resulted:true});
+            res.json({is_resulted:true,result_id:result.insertId});
         });
     }
 });
 router.get("/get",function(req,res,next){
-    loggerjs("result get:" + JSON.stringify(req.body));
-    const selectResultQuery = "select point,max_point,correct_rate from result where id = ?";
+    loggerjs.info("result get:" + JSON.stringify(req.query.test_id));
+    const selectResultQuery = "select point,max_point,correct_rate from result where test_id = ?";
     connection.query(selectResultQuery,[req.query.test_id],function(err,result,field){
         if(err){loggerjs.error(err);res.json({});throw err}
         loggerjs.debug(JSON.stringify(result));

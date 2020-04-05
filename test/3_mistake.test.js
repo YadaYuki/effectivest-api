@@ -1,5 +1,5 @@
-var apiUrl = app + "/api/result";
-describe("/api/result/", function () {
+var apiUrl = app + "/api/mistake";
+describe("/api/mistake/", function () {
     var userToken;
     it("login for test afterward", function (done) {
         const userInfo = { username: "yada.yuki@fuji.waseda.jp", password: "password" };
@@ -14,22 +14,14 @@ describe("/api/result/", function () {
             })
             .end(done);
     });
-    it("add result", function (done) {
-        const sampleResult = { user_token: userToken, point: 10, max_point: 10, correct_rate: 10 / 10, test_id: 1 };
+    it("add mistake", function (done) {
+        const mistakeJson = { user_token:userToken,result_id: 1, question_id: 1};
         request(apiUrl)
             .post("/add")
-            .send(sampleResult)
+            .send(mistakeJson)
+            .expect(200)
             .expect((res) => {
-                expect(res.body.is_resulted).toBe(true);
-                // expect(res.body.result_id).toBe(num);
-            })
-            .end(done);
-    });
-    it("get result", function (done) {
-        request(apiUrl)
-            .get("/get?test_id=1")
-            .expect((res) => {
-                expect(res.body[0]).toEqual({point:10,max_point:10,correct_rate:10/10});
+                expect(res.body.is_mistaked).toEqual(true);
             })
             .end(done);
     });
