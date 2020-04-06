@@ -18,7 +18,7 @@ describe("api/test",function(){
             .get("/get?test_id=1")// get toeic test
             .expect(200) // status
             .expect((res) => {
-                expect(Object.keys(res.body)).toEqual(["testname","description","question_num","created_on"]);//include all keys
+                expect(Object.keys(res.body)).toEqual(["testname","description","created_on"]);//include all keys
             })
             .end(done);
     });
@@ -28,6 +28,7 @@ describe("api/test",function(){
             .expect(200)
             .expect((res)=>{
                 expect(res.body.length).toBeGreaterThanOrEqual(2)// => 2
+                expect(Object.keys(res.body[0])).toEqual(["testname","description","created_on"]);
             })
             .end(done)
     });
@@ -35,7 +36,7 @@ describe("api/test",function(){
     it("add test",function(done){
         request(apiUrl)
             .post("/add")
-            .send({user_token:userToken,testname:"testname",description:"description",question_num:10})
+            .send({user_token:userToken,testname:"testname",description:"description"})
             .expect(200)
             .expect((res)=>{
                 expect(res.body.test_id).toBeGreaterThanOrEqual(1)// 
@@ -46,10 +47,19 @@ describe("api/test",function(){
     it("update test",function(done){
         request(apiUrl)
             .put("/update")
-            .send({user_token:userToken,test_id:testId,testname:"updated.test",description:"updated.description",question_num:11})
+            .send({user_token:userToken,test_id:testId,testname:"updated.test",description:"updated.description"})
             .expect(200)
             .expect((res)=>{
                 expect(res.body.is_updated).toBeTruthy();// 
+            })
+            .end(done);
+    });
+    it("get question_num",function(done){
+        request(apiUrl)
+            .get("/get/question_num?test_id="+testId)
+            .expect(200)
+            .expect(res=>{
+                expect(res.body.question_num).toBe(0);// there is no question.
             })
             .end(done);
     });
