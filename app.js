@@ -12,7 +12,7 @@ var csvApiRouter = require("./routes/csv");
 var testApiRouter = require("./routes/test");
 var questionApiRouter = require("./routes/question");
 var app = express();
-
+console.log(process.env.NODE_ENV);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
