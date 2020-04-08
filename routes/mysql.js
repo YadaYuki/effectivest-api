@@ -3,7 +3,7 @@ var connectionJson;
 if ("production" == process.env.NODE_ENV) {
     connectionJson = {
         connectionLimit:10,
-        host: "35.236.131.114",
+        host: process.env.DB_HOST,
         user: "root",
         password: "pyGiCgyvIxgpn2h4",
         database: "effectivest"
