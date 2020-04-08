@@ -1,0 +1,33 @@
+version: "2"
+services:
+    db:
+        image: mysql:5.7
+        volumes:
+            - "./data/db:/var/lib/mysql"
+        environment: 
+            MYSQL_ROOT_PASSWORD: pyGiCgyvIxgpn2h4
+            MYSQL_DATABASE: effectivest
+    nodejs:
+        build:
+            context: .
+            dockerfile: ./dockerfiles/Dockerfile-nodejs
+        depends_on:
+            - db
+        image: yadayuki/node-web-app
+        ports: 
+            - "3000:3000" 
+        hostname: 
+            node
+        environment: 
+            DB_HOST: db
+        volumes:
+            - ./log:/usr/src/node_docker/log
+    nginx_server:
+        build: 
+            context: .
+            dockerfile: ./dockerfiles/Dockerfile-nginx
+        depends_on: 
+            - nodejs
+        image: nginx-webserver
+        ports: 
+            - "80:80"

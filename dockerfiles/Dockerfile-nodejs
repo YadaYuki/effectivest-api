@@ -1,0 +1,15 @@
+# node.jsのバージョンを指定する
+FROM node:12.16
+# アプリケーションディレクトリを作成する
+WORKDIR /usr/src/node_docker
+# 依存関係を表すjsonファイルを最上位ディレクトリにコピーする
+# 公式ではワイルドカードを用いているがわかりやすくするため、それぞれ書く。
+COPY ./package.json /usr/src/node_docker
+COPY ./package-lock.json /usr/src/node_docker
+# アプリケーションの依存関係のインストールをする
+RUN npm i 
+# アプリケーションのソースをバンドルする(node_moduleは.dockerignoreファイル内に記述することで無視される)
+COPY . .
+#　ポートの指定。指定しないとブロックされてアクセスできない→コメントアウトしてもできた。
+EXPOSE 3000
+CMD ["npm", "start"]
