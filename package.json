@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "test":"node ./bin/www",
-    "start": "node ./bin/www&&NODE_ENV=production"
+    "start": "NODE_ENV=production node ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",

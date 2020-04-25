@@ -20,16 +20,16 @@ router.post("/login", function (req, res, next) {
             loggerjs.debug(JSON.stringify(result));
             if (err) {
                 loggerjs.info("login failed error");
-                res.json({ is_success: false });
+                res.json({ is_login: false });
                 throw error;
             }
             if (!(result.length)) {// user does not exist.
                 loggerjs.info("login failed user not exist");
-                res.json({ is_success: false });
+                res.json({ is_login: false });
             } else if (bcrypt.compareSync(req.body.password, result[0].password)) {
                 const userIdJson = {user_id:result[0].user_id };
                 loggerjs.info(userIdJson.user_id + ":login");
-                res.json({ is_success: true, user_token: jwt.sign(userIdJson, privateKey) });
+                res.json({ is_login: true, user_token: jwt.sign(userIdJson, privateKey) });
             } else {
                 loggerjs.info("login failed password is incorrect");
             }
@@ -43,12 +43,12 @@ router.post("/regist", function (req, res, next) {
     connection.query(selectUserQuery, [req.body.email, req.body.username], function (err, result, fields) {
         if (err) {
             loggerjs.error(err);
-            res.json({ is_success: false });
+            res.json({ is_regist: false });
             throw err;
         }
         if (result.length) {
             loggerjs.info("user already exist");
-            res.json({ is_success: false });
+            res.json({ is_regist: false });
         } else {
             const hash = bcrypt.hashSync(req.body.password, 10);
             const insertUserQuery = "insert into user set ?"
@@ -58,10 +58,10 @@ router.post("/regist", function (req, res, next) {
                 password: hash,
             };
             connection.query(insertUserQuery, userJson, function (err, result, fields) {
-                if (err) { loggerjs.error(err); res.json({ is_success: false });throw err; }
+                if (err) { loggerjs.error(err); res.json({ is_regist: false });throw err; }
                 loggerjs.info(result.insertId + ":registerd");
                 const userIdJson = { user_id: result.insertId };
-                res.json({ is_success: true, user_token: jwt.sign(userIdJson, privateKey) });
+                res.json({ is_regist: true, user_token: jwt.sign(userIdJson, privateKey) });
             });
         }
     });
@@ -77,28 +77,28 @@ router.post("/delete", function (req, res, next) {
             loggerjs.debug(JSON.stringify(result));
             if (err) {
                 loggerjs.error(err);
-                res.json({ is_success: false });
+                res.json({ is_deleted: false });
                 throw err;
             }
 
             if (!(result.length)) {
                 loggerjs.info("user does not exist");
-                res.json({ is_success: false });
+                res.json({ is_deleted: false });
             } else if (bcrypt.compareSync(req.body.password, result[0].password)) {
                 loggerjs.info("delete" + userIdJson.user_id);
                 const deleteUserQuery = "delete from user where user_id = ?";
                 connection.query(deleteUserQuery, [userIdJson.user_id], function (err, result, fields) {
                     if (err) {
                         loggerjs.error(err);
-                        res.json({ is_success: false });
+                        res.json({ is_deleted: false });
                         throw err;
                     }
                     loggerjs.info(userIdJson.user_id + " deleted");
-                    res.json({ is_success: true });
+                    res.json({ is_deleted: true });
                 });
             } else {
                 loggerjs.info("password is incorrect");
-                res.json({ is_success: false });
+                res.json({ is_deleted: false });
             }
         });
     }

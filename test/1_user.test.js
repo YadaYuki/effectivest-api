@@ -16,7 +16,7 @@ describe("/api/user/", function() {
             .send(userInfo)
             .expect(200)
             .expect((res)=>{
-                expect(res.body.is_success).toEqual(true);
+                expect(res.body.is_login).toEqual(true);
             })
             .end(done);
     });
@@ -26,7 +26,7 @@ describe("/api/user/", function() {
             .post("/login")
             .send(userInfo)
             .expect((res)=>{
-                expect(res.body.is_success).toEqual(false);
+                expect(res.body.is_login).toEqual(false);
             })
             .end(done);
     });
@@ -39,7 +39,7 @@ describe("/api/user/", function() {
             .post("/regist")
             .send(sampleUser)
             .expect((res)=>{
-                expect(res.body.is_success).toEqual(true);
+                expect(res.body.is_regist).toEqual(true);
                 sampleUserToken = res.body.user_token;
             })
             .end(done);
@@ -49,7 +49,7 @@ describe("/api/user/", function() {
             .post("/regist")
             .send(sampleUser)
             .expect((res)=>{
-                expect(res.body.is_success).toEqual(false);
+                expect(res.body.is_regist).toEqual(false);
             })
             .end(done);
     });
@@ -97,7 +97,7 @@ describe("/api/user/", function() {
             .post("/api/user/login")
             .send({username:"updated.sample.email@gmail.com",password:"updated.sample_password"})
             .expect((res)=>{
-                expect(res.body.is_success).toEqual(true);
+                expect(res.body.is_login).toEqual(true);
                 sampleUserToken = res.body.user_token;
             })
             .end(done);
@@ -108,7 +108,7 @@ describe("/api/user/", function() {
             .post("/api/user/delete")
             .send({user_token:sampleUserToken,password:"updated.sample_password"})
             .expect((res)=>{
-                expect(res.body.is_success).toEqual(true);
+                expect(res.body.is_deleted).toEqual(true);
             })
             .end(done)
     });
@@ -117,7 +117,7 @@ describe("/api/user/", function() {
             .post("/api/user/delete")
             .send({user_token:sampleUserToken,password:"",})
             .expect((res)=>{
-                expect(res.body.is_success).toEqual(false);
+                expect(res.body.is_deleted).toEqual(false);
             })
             .end(done);
     });

@@ -8,7 +8,7 @@ describe("api/test",function(){
             .send(userInfo)
             .expect(200)
             .expect((res) => {
-                expect(res.body.is_success).toEqual(true);
+                expect(res.body.is_login).toEqual(true);
                 userToken = res.body.user_token;
             })
             .end(done);
