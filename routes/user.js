@@ -32,6 +32,7 @@ router.post("/login", function (req, res, next) {
                 res.json({ is_login: true, user_token: jwt.sign(userIdJson, privateKey) });
             } else {
                 loggerjs.info("login failed password is incorrect");
+                res.json({is_login:false});
             }
         });
     });
