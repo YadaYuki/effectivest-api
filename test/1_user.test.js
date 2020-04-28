@@ -16,7 +16,7 @@ describe("/api/user/", function() {
             .send(userInfo)
             .expect(200)
             .expect((res)=>{
-                expect(res.body.is_login).toEqual(true);
+                expect(res.body.is_login).toBeTruthy();
             })
             .end(done);
     });
@@ -39,7 +39,7 @@ describe("/api/user/", function() {
             .post("/regist")
             .send(sampleUser)
             .expect((res)=>{
-                expect(res.body.is_regist).toEqual(true);
+                expect(res.body.is_regist).toBeTruthy();
                 sampleUserToken = res.body.user_token;
             })
             .end(done);
@@ -68,7 +68,7 @@ describe("/api/user/", function() {
             .put("/api/user/update")
             .send({user_token:sampleUserToken,email:"updated.sample.email@gmail.com",username:"updated.yadayuki"})
             .expect((res)=>{
-                expect(res.body.is_updated).toEqual(true);
+                expect(res.body.is_updated).toBeTruthy();
             })
             .end(done)
     });
@@ -78,7 +78,7 @@ describe("/api/user/", function() {
             .put("/api/user/update/password")
             .send({user_token:sampleUserToken,password:"sample_password",new_password:"updated.sample_password"})
             .expect((res)=>{
-                expect(res.body.is_updated).toEqual(true);
+                expect(res.body.is_updated).toBeTruthy();
             })
             .end(done);
     });
@@ -91,13 +91,35 @@ describe("/api/user/", function() {
             })
             .end(done)
     });
-
+    it("update username success",function(done){
+        request(app)
+            .put("/api/user/update/username")
+            .send({user_token:sampleUserToken,username:sampleUser.username})
+            .expect((res)=>{
+                expect(res.body.is_updated).toBeTruthy();
+            })
+            .end(done);
+    });
+    it("update username failed",function(done){
+        request(app)
+            .put("/api/user/update/username")
+            .send({user_token:"",username:sampleUser.username})
+            .expect((res)=>{
+                expect(res.body.is_updated).toBeFalsy();
+            })
+            .end(done);
+    });
+    it("update email",function(done){
+        request(app)
+            .put("/api/user/update/email")
+            .send({user_token:sampleUserToken,email:sample})
+    });
     it("confirm update by login",function(done){
         request(app)
             .post("/api/user/login")
             .send({username:"updated.sample.email@gmail.com",password:"updated.sample_password"})
             .expect((res)=>{
-                expect(res.body.is_login).toEqual(true);
+                expect(res.body.is_login).toBeTruthy();
                 sampleUserToken = res.body.user_token;
             })
             .end(done);
@@ -108,7 +130,7 @@ describe("/api/user/", function() {
             .post("/api/user/delete")
             .send({user_token:sampleUserToken,password:"updated.sample_password"})
             .expect((res)=>{
-                expect(res.body.is_deleted).toEqual(true);
+                expect(res.body.is_deleted).toBeTruthy();
             })
             .end(done)
     });
