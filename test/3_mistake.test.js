@@ -15,7 +15,7 @@ describe("/api/mistake/", function () {
             .end(done);
     });
     it("add mistake", function (done) {
-        const mistakeJson = { user_token:userToken,result_id: 1, question_id: 1};
+        const mistakeJson = { user_token:userToken,mistake:[{result_id: 2, question_id: 2},{result_id: 2, question_id: 2}]};
         request(apiUrl)
             .post("/add")
             .send(mistakeJson)

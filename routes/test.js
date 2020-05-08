@@ -24,7 +24,7 @@ router.get("/get/all", function (req, res, next) {
         loggerjs.info("token is incorrect");
     } else {
         loggerjs.info(userIdJson.user_id + " get all test");
-        const selectTestQuery = "select testname,description,created_on from test where user_id=?";
+        const selectTestQuery = "select test_id,testname,description,created_on from test where user_id=?";
         connection.query(selectTestQuery, [userIdJson.user_id], function (err, result, field) {
             if (err) { loggerjs.error(err); res.json({}); throw err; }
             loggerjs.debug(JSON.stringify(result))
@@ -73,7 +73,7 @@ router.put("/update", function (req, res, next) {
     } else {
         loggerjs.info(userIdJson.user_id + " update test");
         const updateTestQuery = "update test set testname=?,description=? where test_id=?";
-        connection.query(updateTestQuery, [req.body.testname, req.body.description, userIdJson.user_id], function (err, result, field) {
+        connection.query(updateTestQuery, [req.body.testname, req.body.description, req.body.test_id], function (err, result, field) {
             if (err) { loggerjs.error(err); res.json({ is_updated: false }); throw err; }
             res.json({ is_updated: true });
         });

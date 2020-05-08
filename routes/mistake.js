@@ -14,11 +14,13 @@ router.post("/add", function (req, res, next) {
     } else {
         loggerjs.info(userIdJson.user_id + " mistake insert");
         const insertMistakeQuery = "insert into mistake set ?";
-        const mistakeJson = {result_id:req.body.result_id,question_id:req.body.question_id};
-        connection.query(insertMistakeQuery,mistakeJson,function(err,result,field){
-            if(err){loggerjs.error(err);res.json({is_mistaked:false});throw err}
-            res.json({is_mistaked:true});
-        });
+        for (let mistake of req.body.mistake) {
+            const mistakeJson = { result_id: mistake.result_id, question_id: mistake.question_id };
+            connection.query(insertMistakeQuery, mistakeJson, function (err, result, field) {
+                if (err) { loggerjs.error(err); res.json({ is_mistaked: false }); throw err }
+            });
+        }
+        res.json({ is_mistaked: true });
     }
 });
 module.exports = router;

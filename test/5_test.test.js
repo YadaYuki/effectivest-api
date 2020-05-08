@@ -28,7 +28,7 @@ describe("api/test",function(){
             .expect(200)
             .expect((res)=>{
                 expect(res.body.length).toBeGreaterThanOrEqual(2)// => 2
-                expect(Object.keys(res.body[0])).toEqual(["testname","description","created_on"]);
+                expect(Object.keys(res.body[0])).toEqual(["test_id","testname","description","created_on"]);
             })
             .end(done)
     });
