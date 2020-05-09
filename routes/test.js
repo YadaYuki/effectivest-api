@@ -54,7 +54,7 @@ router.post("/add", function (req, res, next) {
         loggerjs.info(userIdJson.user_id + " add test");
         const insertTestQuery = "insert into test set ?";
         const testJson = {
-            testname: req.body.testname, description: req.body.description
+            testname: req.body.testname, description: req.body.description,user_id:userIdJson.user_id
         };
         connection.query(insertTestQuery, testJson, function (err, result, field) {
             if (err) { loggerjs.error(err); res.json({}); throw err; }
