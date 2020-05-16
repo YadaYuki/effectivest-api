@@ -6,7 +6,7 @@ describe("/api/question",function(){
             .expect(200)
             .expect(res=>{
                 expect(res.body.length).toBeGreaterThan(1);
-                expect(Object.keys(res.body[0])).toEqual(["question_id","question","answer"]);
+                expect(Object.keys(res.body[0])).toEqual(["question_id","question","answer","correct_rate"]);
             }).end(done);
     });
     it("get random question",function(done){

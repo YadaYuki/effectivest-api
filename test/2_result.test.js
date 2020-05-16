@@ -29,7 +29,7 @@ describe("/api/result/", function () {
         request(apiUrl)
             .get("/get?test_id=1")
             .expect((res) => {
-                expect(res.body[0]).toEqual({point:10,max_point:10,correct_rate:10/10});
+                expect(res.body[0]).toEqual({result_id:1,point:10,max_point:10,correct_rate:10/10});
             })
             .end(done);
     });

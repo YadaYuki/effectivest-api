@@ -7,7 +7,7 @@ var fs = require("fs");
 var privateKey = fs.readFileSync("./private-key.pem", "utf8");
 router.get("/get/all", function (req, res, next) {
     loggerjs.info("get all question:", JSON.stringify(req.query));
-    const selectQuestionQuery = "select question_id,question,answer from question where test_id=?";
+    const selectQuestionQuery = "select question_id,question,answer,correct_rate from question where test_id=?";
     connection.query(selectQuestionQuery, req.query.test_id, function (err, result, field) {
         if (err) { loggerjs.error(err); res.json({}); throw err }
         res.json(result);

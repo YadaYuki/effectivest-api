@@ -30,7 +30,7 @@ router.post("/add",function(req,res,next){
 });
 router.get("/get",function(req,res,next){
     loggerjs.info("result get:" + JSON.stringify(req.query.test_id));
-    const selectResultQuery = "select point,max_point,correct_rate from result where test_id = ?";
+    const selectResultQuery = "select result_id,point,max_point,correct_rate from result where test_id = ?";
     connection.query(selectResultQuery,[req.query.test_id],function(err,result,field){
         if(err){loggerjs.error(err);res.json({});throw err}
         loggerjs.debug(JSON.stringify(result));
