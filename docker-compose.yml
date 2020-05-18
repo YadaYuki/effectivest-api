@@ -5,6 +5,7 @@ services:
         volumes:
             - "./data/db:/var/lib/mysql"
             - "./mysql_conf/my.cnf:/etc/mysql/my.cnf"
+        restart: always
         environment: 
             MYSQL_ROOT_PASSWORD: pyGiCgyvIxgpn2h4
             MYSQL_DATABASE: effectivest
@@ -12,6 +13,7 @@ services:
         build:
             context: .
             dockerfile: ./dockerfiles/Dockerfile-nodejs
+        restart: always
         depends_on:
             - db
         image: yadayuki/node-web-app
@@ -29,6 +31,7 @@ services:
             dockerfile: ./dockerfiles/Dockerfile-nginx
         depends_on: 
             - nodejs
+        restart: always
         image: nginx-webserver
         ports: 
             - "80:80"
