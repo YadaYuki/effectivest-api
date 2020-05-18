@@ -21,7 +21,7 @@ router.post("/login", function (req, res, next) {
             if (err) {
                 loggerjs.info("login failed error");
                 res.json({ is_login: false });
-                throw error;
+                throw err;
             }
             if (!(result.length)) {// user does not exist.
                 loggerjs.info("login failed user not exist");
