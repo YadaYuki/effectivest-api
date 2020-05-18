@@ -61,7 +61,7 @@ router.post("/add", function (req, res, next) {
             loggerjs.debug(JSON.stringify(result))
             res.json({ test_id: result.insertId });
         });
-    }
+    };
 });
 
 router.put("/update", function (req, res, next) {

@@ -1,3 +1,3 @@
 request = require("supertest");
 expect = require("expect");
-app = "http://localhost:3000"; // URLを指定したらできた。
+app = "http://34.85.25.219"; // URLを指定したらできた。
