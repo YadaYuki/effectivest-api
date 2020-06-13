@@ -18,7 +18,7 @@ router.get("/get/:id", function (req, res, next) {
             loggerjs.debug(encodedTestName);
             res.setHeader('Content-disposition', "attachment; filename=#;filename*=UTF-8''?".replace("#", encodedTestName).replace("?", encodedTestName));
             loggerjs.debug("attachment; filename=#;filename*=UTF-8''?".replace("#", encodedTestName).replace("?", encodedTestName));
-            res.setHeader('Content-Type', 'text/csv; charset=UTF-8');
+            res.setHeader('Content-Type', 'text/csv; charset=ANSI');
             res.status(200).send(questionCsv);
         });
     });

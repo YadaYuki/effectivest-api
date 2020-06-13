@@ -5,6 +5,7 @@ var jwt = require("jsonwebtoken");
 var loggerjs = require("./logger");
 var fs = require("fs");
 var privateKey = fs.readFileSync("./private-key.pem", "utf8");
+
 router.get("/get/all", function (req, res, next) {
     loggerjs.info("get all question:", JSON.stringify(req.query));
     const selectQuestionQuery = "select question_id,question,answer,correct_rate from question where test_id=?";
@@ -20,6 +21,7 @@ router.get("/get/all", function (req, res, next) {
         });
     }
 });
+
 router.get("/get/random", function (req, res, next) {
     loggerjs.info("get random question:", JSON.stringify(req.query));
     const selectQuestionQuery = "select question_id,question,answer from question where test_id=? order by rand() limit ?";
@@ -37,6 +39,7 @@ router.get("/get/random", function (req, res, next) {
         }
     });
 });
+
 router.get("/get/week", function (req, res, next) {
     loggerjs.info("get week question:", JSON.stringify(req.query));
     const selectQuestionQuery = "select question_id,question,answer from question where test_id=? order by correct_rate limit ?";
@@ -53,6 +56,7 @@ router.get("/get/week", function (req, res, next) {
         }
     });
 });
+
 router.post("/add", function (req, res, next) {
     loggerjs.info("add question:" + JSON.stringify(req.body));
     const userIdJson = jwt.verify(req.body.user_token, privateKey);
@@ -73,6 +77,7 @@ router.post("/add", function (req, res, next) {
         });
     }
 });
+
 router.delete("/delete", function (req, res, next) {
     loggerjs.info("delete question:" + JSON.stringify(req.body));
     const userIdJson = jwt.verify(req.body.user_token, privateKey);
@@ -88,6 +93,7 @@ router.delete("/delete", function (req, res, next) {
         });
     }
 });
+
 router.put("/update/correct_time", function (req, res, next) {
     loggerjs.info("update question correct time:" + JSON.stringify(req.body));
     const userIdJson = jwt.verify(req.body.user_token, privateKey);
