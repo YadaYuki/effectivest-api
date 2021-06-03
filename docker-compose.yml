@@ -3,11 +3,11 @@ services:
     db:
         image: mysql:5.7
         volumes:
-            - "./mysql_conf/my.cnf:/etc/mysql/my.cnf"
+            - ./mysql/init:/docker-entrypoint-initdb.d
+            - "./mysql/mysql_conf/my.cnf:/etc/mysql/my.cnf"
         restart: always
         environment: 
             MYSQL_ROOT_PASSWORD: pyGiCgyvIxgpn2h4
-            MYSQL_DATABASE: effectivest
     nodejs:
         build:
             context: .
