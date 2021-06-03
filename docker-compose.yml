@@ -3,7 +3,6 @@ services:
     db:
         image: mysql:5.7
         volumes:
-            - "./data/db:/var/lib/mysql"
             - "./mysql_conf/my.cnf:/etc/mysql/my.cnf"
         restart: always
         environment: 
