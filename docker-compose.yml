@@ -1,13 +1,17 @@
+x-aws-vpc: "vpc-090139b1c2a524f73"
+
 version: "2"
 services:
     db:
-        image: mysql:5.7
-        volumes:
-            - ./mysql/init:/docker-entrypoint-initdb.d
-            - "./mysql/mysql_conf/my.cnf:/etc/mysql/my.cnf"
+        image: 955847467435.dkr.ecr.ap-northeast-1.amazonaws.com/effectivest/database:latest
+        build:
+            context: .
+            dockerfile: ./dockerfiles/Dockerfile-mysql
         restart: always
-        environment: 
-            MYSQL_ROOT_PASSWORD: pyGiCgyvIxgpn2h4
+        env_file:
+            - ./.env
+        ports: 
+            - "3306:3306"
     nodejs:
         build:
             context: .
@@ -15,15 +19,13 @@ services:
         restart: always
         depends_on:
             - db
-        image: yadayuki/node-web-app
+        image: 955847467435.dkr.ecr.ap-northeast-1.amazonaws.com/effectivest/server:latest
         ports: 
             - "3000:3000" 
         hostname: 
             node
         environment: 
             DB_HOST: db
-        volumes:
-            - ./log:/usr/src/node_docker/log
     nginx_server:
         build: 
             context: .
@@ -31,6 +33,6 @@ services:
         depends_on: 
             - nodejs
         restart: always
-        image: nginx-webserver
+        image: 955847467435.dkr.ecr.ap-northeast-1.amazonaws.com/effectivest/proxy:latest
         ports: 
             - "80:80"
