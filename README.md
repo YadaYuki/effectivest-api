@@ -1,8 +1,9 @@
 # API of original Study App 「Effectivest」🥸
 - 「Effectivest」 is original application for studying effectively
-- Serverside API is implemented by Node.js/Express/Javascript
-- Infrastructure : AWS,Firebase,Docker
-- This service is currently closed, so only demo videos are available 😓
+- Serverside API is implemented by **Node.js/Express/Javascript**
+- Infrastructure : **AWS,Firebase,Docker**
+
+#### ※**This service is currently closed, so only demo videos are available 😓**
 
 # Demo 🤩
 
